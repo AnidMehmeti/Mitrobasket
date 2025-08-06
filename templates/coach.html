@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Orari i Grupeve - Mitrobasket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="bg-green-50 text-green-900 min-h-screen px-4 py-6">
+
+  <!-- Logout link -->
+  <div class="flex justify-end mb-6">
+    <a href="{{ url_for('logout') }}" class="text-green-800 font-semibold hover:underline">
+      Logout
+    </a>
+  </div>
+
+  <h1 class="text-4xl font-bold text-center text-green-900 mb-10">Orari i Grupeve</h1>
+
+  <!-- Group Cards -->
+  <div class="space-y-10 max-w-6xl mx-auto">
+    {% for group, players in grouped_players.items() %}
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-2xl font-semibold text-green-800 mb-4">Grupi: {{ group }}</h2>
+
+      {% if players %}
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto text-center border-collapse">
+          <thead>
+            <tr class="bg-green-900 text-white">
+              <th class="py-3 px-4 border">Emri</th>
+              <th class="py-3 px-4 border">Emri i Prindit</th>
+              <th class="py-3 px-4 border">Mbiemri</th>
+              <th class="py-3 px-4 border">Mosha</th>
+              <th class="py-3 px-4 border">Data e pagesës</th>
+              <th class="py-3 px-4 border">Numri i Telefonit</th>
+              <th class="py-3 px-4 border">Largo Lojtarin</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            {% for player in players %}
+            <tr class="hover:bg-green-50 transition">
+              <td class="py-2 px-4 border">{{ player.emri }}</td>
+              <td class="py-2 px-4 border">{{ player.emri_prindit }}</td>
+              <td class="py-2 px-4 border">{{ player.mbiemri }}</td>
+              <td class="py-2 px-4 border">{{ player.mosha }}</td>
+              <td class="py-2 px-4 border">{{ player.next_payment_date.strftime('%d-%m-%Y') }}</td>
+              <td class="py-2 px-4 border">{{ player.numri_telefonit }}</td>
+              <td class="py-2 px-4 border">
+                <form id="delete-form-{{ player.numri_lojtarit }}" 
+      autocomplete="off"
+      method="POST"
+      action="{{ url_for('delete_player', player_id=player.numri_lojtarit) }}">
+  <button type="button"
+          onclick="confirmDeletion({{ player.numri_lojtarit }})"
+          class="text-red-600 hover:text-white hover:bg-red-600 border border-red-600 px-3 py-1 rounded transition shadow-sm"
+          title="Fshij lojtarin">
+    ✖
+  </button>
+</form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-gray-600 italic">Nuk ka lojtarë për këtë grup.</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+<script>
+  function confirmDeletion(playerId) {
+    Swal.fire({
+      title: 'Jeni të sigurt?',
+      text: "Ky veprim do ta largojë lojtarin!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Po, largoje!',
+      cancelButtonText: 'Anulo'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById(`delete-form-${playerId}`).submit();
+      }
+    });
+  }
+</script>
+
+
+</body>
+</html>

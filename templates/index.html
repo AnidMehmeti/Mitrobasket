@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mitrobasket</title> <!-- Titulli i faqes -->
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CDN -->
+  <script defer src="../static/index.js"></script> <!-- Lidhja me JavaScript -->
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+
+</head>
+<body class="bg-white text-gray-900 font-sans leading-relaxed">
+
+  <!-- Navigation bar -->
+<header class="flex items-center justify-between px-6 py-4 bg-green-900 text-white sticky top-0 z-50 shadow-md">
+  <div class="h-10 w-auto overflow-visible">
+    <img src="../static/images/logo.jpg" 
+         alt="Logo" 
+         class="h-12 w-auto -my-1" />
+  </div>
+  <nav>
+    <ul class="flex space-x-8 text-lg font-semibold">
+      <li><a href="#groups" class="hover:text-green-300 transition">Oraret</a></li>
+      <li><a href="#coaches" class="hover:text-green-300 transition">Trenerët</a></li>
+      <li><a href="#register" class="hover:text-green-300 transition">Regjistrimi</a></li>
+      <li><a href="{{ url_for('login') }}" class="bg-green-700 hover:bg-green-600 px-4 py-2 rounded transition">Coach Login</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <main id="container" class="max-w-7xl mx-auto px-6 py-10">
+
+    <!-- Intro Section -->
+ <section id="home" class="mb-16 max-w-4xl mx-auto text-green-900">
+  <h1 class="relative inline-block font-extrabold mb-6 pl-4 group cursor-pointer text-5xl">
+    <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+      Mirë se vini në Mitrobasket
+    </span>
+    <span class="absolute left-0 top-0 bottom-0 w-1 bg-green-700 rounded-r transition-all duration-300 group-hover:w-full"></span>
+  </h1>
+  <p class="text-lg max-w-3xl leading-relaxed">
+<strong>Stërvitje që frymëzon.</strong><br>
+Për çdo fëmijë. Për çdo nivel.<br>
+Zhvillojmë shkathtësitë. Ndërtojmë vetëbesim. Nxjerrim dashurinë për lojën.
+  </p>
+</section>
+
+
+    <!-- Info / Speech Bubble Section -->
+    <section class="mb-16 max-w-7xl mx-auto px-6">
+  <div class="grid md:grid-cols-3 gap-8 text-green-900">
+    <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-semibold mb-3 text-lg border-b-2 border-green-700 pb-1">Traditë</h3>
+      <p>
+       Prej 2008-ës, Mitrobasket është zemra e basketbollit për fëmijë në Mitrovicë.<br>
+       Çdo stërvitje është një hap drejt zhvillimit dhe përmirësimit.
+      </p>
+    </div>
+    <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-semibold mb-3 text-lg border-b-2 border-green-700 pb-1">Emër</h3>
+      <p>
+      Punë, përkushtim, dhe dashuri për secilin fëmijë - kjo na dallon.<br>
+      Prindërit dhe fëmijët na besojnë <strong>ne</strong>.
+      </p>
+    </div>
+    <div class="bg-green-50 p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h3 class="font-semibold mb-3 text-lg border-b-2 border-green-700 pb-1">Rezultat</h3>
+      <p>
+Disa lojtarë tanë janë pjesë e ekipeve të Superligës dhe Përfaqësueses së Kosovës në gjenerata të ndryshme.
+      </p>
+    </div>
+  </div>
+  <div class="mt-8 text-center text-green-900 italic font-semibold">
+   Kampe basketbolli, ndeshje miqësore, ekskursione. Për secilin nga diçka.
+  </div>
+</section>
+
+
+    <!-- Training Groups -->
+    <section id="groups" class="mb-16 max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-green-900 mb-4">Grupet e Trajnimit dhe Orari</h2>
+      <p class="mb-2">Fëmijët kanë stërvitje në fundjavë - të Shtunën dhe të Dielën</p>
+      <p class="mb-6">Grupet janë të ndara sipas moshës</p>
+      <div class="overflow-x-auto">
+        <table class="min-w-full border border-green-700 rounded-lg overflow-hidden">
+          <thead class="bg-green-900 text-white">
+            <tr>
+              <th class="py-3 px-6 text-left">Grupi</th>
+              <th class="py-3 px-6 text-left">Mosha Adekuate</th>
+              <th class="py-3 px-6 text-left">Orari i Stërvitjes</th>
+            </tr>
+          </thead>
+          <tbody class="text-green-900 bg-green-50">
+            <tr class="border-t border-green-300 hover:bg-green-100 transition">
+              <td class="py-3 px-6">Grupi 1</td>
+              <td class="py-3 px-6">6-7 vjeç</td>
+              <td class="py-3 px-6">10:00-11:00</td>
+            </tr>
+            <tr class="border-t border-green-300 hover:bg-green-100 transition">
+              <td class="py-3 px-6">Grupi 2</td>
+              <td class="py-3 px-6">8-9 vjeç</td>
+              <td class="py-3 px-6">11:00-12:00</td>
+            </tr>
+            <tr class="border-t border-green-300 hover:bg-green-100 transition">
+              <td class="py-3 px-6">Grupi 3</td>
+              <td class="py-3 px-6">10-11 vjeç</td>
+              <td class="py-3 px-6">12:00-13:00</td>
+            </tr>
+            <tr class="border-t border-green-300 hover:bg-green-100 transition">
+              <td class="py-3 px-6">Grupi 4</td>
+              <td class="py-3 px-6">12-13 vjeç</td>
+              <td class="py-3 px-6">13:00-14:00</td>
+            </tr>
+            <tr class="border-t border-green-300 hover:bg-green-100 transition">
+              <td class="py-3 px-6">Grupi 5</td>
+              <td class="py-3 px-6">14-16 vjeç</td>
+              <td class="py-3 px-6">14:00-15:00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Gym Section -->
+    <section class="mb-16 max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-green-900 mb-4">Palestra</h2>
+      <img src="../static/images/Gym.jpg" alt="Gym" class="rounded-lg shadow-lg mb-4 w-full object-cover max-h-96" />
+      <p class="text-green-900 text-lg leading-relaxed">
+        Stërvitjet zhvillohen në palestrën e <strong>Kosovo Leadership Academy</strong>, në rrugën <i>Ramadan Kelmendi</i>, Mitrovicë.
+      </p>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="mb-16 max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-green-900 mb-6 text-center">Momente nga stërvitjet</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <img src="../static/images/foto1.jpg" alt="foto1" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto2.jpg" alt="foto2" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto3.jpg" alt="foto3" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto4.jpg" alt="foto4" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto5.jpg" alt="foto5" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto6.jpg" alt="foto6" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto7.jpg" alt="foto7" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto8.jpg" alt="foto8" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+        <img src="../static/images/foto9.jpg" alt="foto9" class="rounded-lg shadow-md object-cover h-48 w-full transform transition-transform duration-300 hover:scale-105" />
+      </div>
+    </section>
+
+  <section id="coaches" class="mb-16 max-w-4xl mx-auto relative pt-20 overflow-visible">
+  <h2 class="text-3xl font-bold text-green-900 mb-8 text-center">Takoni trajnerët tanë</h2>
+  <div class="flex flex-col sm:flex-row justify-center gap-12">
+
+    <!-- Artan Mehmeti -->
+    <div class="relative group text-center max-w-xs cursor-pointer overflow-visible">
+      <img src="../static/images/Coach1CV.jpg" alt="Artan Mehmeti"
+           class="rounded-lg shadow-lg mx-auto mb-4 max-h-64 transform transition-transform duration-300 hover:scale-105" />
+      <div
+        class="inline-block bg-green-800 text-white px-6 py-2 rounded select-none font-semibold">
+        Artan Mehmeti
+      </div>
+      <!-- Hover Tooltip -->
+      <div
+  class="absolute right-full top-1/2 -translate-y-1/2 ml-4 w-72 bg-white text-green-900 p-4 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 z-10 text-left">
+        <p><strong>MVP i Kosovës</strong></p>
+        <p>Kampion 4 herë i Superligës</p>
+        <p>Trajner i licencuar FIBA Level 1</p>
+        <p>Trajner në Mitrobasket që nga viti 2008</p>
+        <p>Email: artanmehmeti@hotmail.com</p>
+      </div>
+    </div>
+
+    <!-- Bujar Begu -->
+    <div class="relative group text-center max-w-xs cursor-pointer overflow-visible">
+      <img src="../static/images/Coach2CV.jpg" alt="Bujar Begu"
+           class="rounded-lg shadow-lg mx-auto mb-4 max-h-64 transform transition-transform duration-300 hover:scale-105" />
+      <div
+        class="inline-block bg-green-800 text-white px-6 py-2 rounded select-none font-semibold">
+        Bujar Begu
+      </div>
+      <!-- Hover Tooltip -->
+     <div
+  class="absolute left-full top-1/2 -translate-y-1/2 mr-4 w-72 bg-white text-green-900 p-4 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 z-10 text-left">
+
+        <p><strong>Doktor shkence në Kineziologji (PhD)</strong></p>
+        <p>Arsimues me përvojë në basketboll</p>
+        <p>Trajner në Mitrobasket që nga viti 2008</p>
+        <p>Email: bujarbegu4@gmail.com</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+   <!-- Payment Section -->
+<section class="mb-24 max-w-6xl mx-auto px-6">
+  <div class="flex flex-col md:flex-row items-center gap-16">
+    
+    <!-- Image -->
+    <div class="w-full md:w-1/2">
+      <img 
+        src="../static/images/Contact Image.jpg" 
+        alt="Contact Image" 
+        class="rounded-xl shadow-xl object-cover w-full max-h-64 md:max-h-80 transition-all duration-300 ease-in-out"
+      />
+    </div>
+    
+    <!-- Text Content -->
+    <div class="w-full md:w-1/2 text-green-900 space-y-6">
+      <h2 class="text-4xl font-semibold tracking-tight">Pagesa</h2>
+      <p class="text-xl leading-relaxed">
+        <span class="font-bold">15€</span> në muaj për fëmijë. <br>
+        Zbritje për vëllezër e motra. <br>
+        Regjistrohuni sot.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Registration Form -->
+    <section id="register" class="mb-20 max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-green-900 mb-8 text-center">Bëhu pjesë e ekipit tonë</h2>
+      {% if error %}
+  <div class="max-w-md mx-auto mb-6 px-4 py-3 rounded bg-red-100 border border-red-400 text-red-700 font-semibold text-center">
+    {{ error }}
+  </div>
+{% endif %}
+
+      <form id="form" action="/register" method="post" autocomplete="off" class="space-y-6 bg-green-50 rounded-lg p-8 shadow-lg">
+        <div class="input-control">
+          <label for="full_name" class="block mb-2 font-semibold text-green-900">Emri</label>
+          <input id="full_name" name="full_name" type="text" required
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+          <p class="error text-red-600 mt-1 text-sm hidden"></p>
+        </div>
+        <div class="input-control">
+          <label for="parent_name" class="block mb-2 font-semibold text-green-900">Emri i prindit</label>
+          <input id="parent_name" name="parent_name" type="text"
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+          <p class="error text-red-600 mt-1 text-sm hidden"></p>
+        </div>
+        <div class="input-control">
+          <label for="last_name" class="block mb-2 font-semibold text-green-900">Mbiemri</label>
+          <input id="last_name" name="last_name" type="text" required
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+          <p class="error text-red-600 mt-1 text-sm hidden"></p>
+        </div>
+        <div class="input-control">
+          <label for="age" class="block mb-2 font-semibold text-green-900">Mosha</label>
+          <input id="age" name="age" type="number" min="6" max="20" required
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+          <p class="error text-red-600 mt-1 text-sm hidden"></p>
+        </div>
+        <div class="input-control">
+          <label for="telephone_number" class="block mb-2 font-semibold text-green-900">Numri i telefonit</label>
+          <input id="telephone_number" name="telephone_number" type="text" maxlength="10" required
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+          <p class="error text-red-600 mt-1 text-sm hidden"></p>
+        </div>
+        <button type="submit"
+          class="bg-green-900 hover:bg-green-800 text-white font-bold py-3 px-6 rounded w-full transition">
+          Regjistrohu
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="bg-green-900 text-white py-6 text-center text-sm font-medium">
+    <p>&copy; 2025 Mitrobasket. All rights reserved.</p> <!--Footer-i-->
+  </footer>
+  
+</body>
+</html>
