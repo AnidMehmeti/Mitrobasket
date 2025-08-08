@@ -191,33 +191,6 @@ Disa lojtarë tanë janë pjesë e ekipeve të Superligës dhe Përfaqësueses s
   </div>
 </section>
 
-
-   <!-- Payment Section -->
-<section class="mb-24 max-w-6xl mx-auto px-6">
-  <div class="flex flex-col md:flex-row items-center gap-16">
-    
-    <!-- Image -->
-    <div class="w-full md:w-1/2">
-      <img 
-        src="../static/images/Contact Image.jpg" 
-        alt="Contact Image" 
-        class="rounded-xl shadow-xl object-cover w-full max-h-64 md:max-h-80 transition-all duration-300 ease-in-out"
-      />
-    </div>
-    
-    <!-- Text Content -->
-    <div class="w-full md:w-1/2 text-green-900 space-y-6">
-      <h2 class="text-4xl font-semibold tracking-tight">Pagesa</h2>
-      <p class="text-xl leading-relaxed">
-        <span class="font-bold">15€</span> në muaj për fëmijë. <br>
-        Zbritje për vëllezër e motra. <br>
-        Regjistrohuni sot.
-      </p>
-    </div>
-  </div>
-</section>
-
-
     <!-- Registration Form -->
     <section id="register" class="mb-20 max-w-3xl mx-auto px-6">
       <h2 class="text-3xl font-bold text-green-900 mb-8 text-center">Bëhu pjesë e ekipit tonë</h2>
@@ -231,19 +204,19 @@ Disa lojtarë tanë janë pjesë e ekipeve të Superligës dhe Përfaqësueses s
         <div class="input-control">
           <label for="full_name" class="block mb-2 font-semibold text-green-900">Emri</label>
           <input id="full_name" name="full_name" type="text" required
-            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2 only-letters" />
           <p class="error text-red-600 mt-1 text-sm hidden"></p>
         </div>
         <div class="input-control">
-          <label for="parent_name" class="block mb-2 font-semibold text-green-900">Emri i prindit</label>
+          <label for="parent_name" required class="block mb-2 font-semibold text-green-900">Emri i prindit</label>
           <input id="parent_name" name="parent_name" type="text"
-            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2 only-letters" />
           <p class="error text-red-600 mt-1 text-sm hidden"></p>
         </div>
         <div class="input-control">
           <label for="last_name" class="block mb-2 font-semibold text-green-900">Mbiemri</label>
           <input id="last_name" name="last_name" type="text" required
-            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
+            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" only-letters/>
           <p class="error text-red-600 mt-1 text-sm hidden"></p>
         </div>
         <div class="input-control">
@@ -252,12 +225,20 @@ Disa lojtarë tanë janë pjesë e ekipeve të Superligës dhe Përfaqësueses s
             class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
           <p class="error text-red-600 mt-1 text-sm hidden"></p>
         </div>
-        <div class="input-control">
-          <label for="telephone_number" class="block mb-2 font-semibold text-green-900">Numri i telefonit</label>
-          <input id="telephone_number" name="telephone_number" type="text" maxlength="10" required
-            class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2" />
-          <p class="error text-red-600 mt-1 text-sm hidden"></p>
-        </div>
+       <div class="input-control">
+  <label for="telephone_number" class="block mb-2 font-semibold text-green-900">Numri i telefonit</label>
+  <input 
+    id="telephone_number" 
+    name="telephone_number" 
+    type="text" 
+    maxlength="17"
+    placeholder="+383 4X XXX XXX"
+    required
+    class="w-full rounded border border-green-300 focus:border-green-600 focus:ring focus:ring-green-300 focus:outline-none px-4 py-2"
+    oninput="formatPhoneNumber(this)" />
+  <p class="error text-red-600 mt-1 text-sm hidden"></p>
+</div>
+
         <button type="submit"
           class="bg-green-900 hover:bg-green-800 text-white font-bold py-3 px-6 rounded w-full transition">
           Regjistrohu

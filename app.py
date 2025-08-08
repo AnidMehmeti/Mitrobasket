@@ -1,19 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-import os
-from flask import Flask, render_template, request, redirect, url_for, session
-from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import datetime, timedelta
+from dotenv import load_dotenv 
 import os
-from dotenv import load_dotenv
+import re
 
-
-
-
-
-
-
+#Create Flask instance
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/mitrobasket.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -22,6 +15,7 @@ db = SQLAlchemy(app)
 load_dotenv()
 app.secret_key = os.getenv('SECRET_KEY')
 
+#Table for storing player information
 class Player(db.Model):
     __tablename__ = 'players'
 
@@ -34,6 +28,7 @@ class Player(db.Model):
     numri_telefonit = db.Column(db.String(20), nullable=False)
     orari_grupit = db.Column(db.String(10), nullable=False)
 
+#Function to calculate time slot based on age
 def calculate_orari(mosha):
     if 6 <= mosha <= 7:
         return "10:00-11:00"
@@ -48,6 +43,7 @@ def calculate_orari(mosha):
     else:
         return ""
 
+#Only coaches can access the player data
 class Coach(db.Model):
     __tablename__ = 'coaches'
 
@@ -58,28 +54,37 @@ class Coach(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
+#Home route
 @app.route('/')
 def home():
     return render_template('index.html')
 
+#Register route
 @app.route('/register', methods=['POST'])
+#Retrieve form data and validate it
 def register():
-    emri = request.form.get('full_name')
-    emri_prindit = request.form.get('parent_name')
-    mbiemri = request.form.get('last_name')
+    emri = request.form.get('full_name').strip()
+    emri_prindit = request.form.get('parent_name').strip()
+    mbiemri = request.form.get('last_name').strip()
     mosha = request.form.get('age')
     numri_telefonit = request.form.get('telephone_number')
 
     if not (emri and mbiemri and mosha and numri_telefonit):
-        return "Missing required fields", 400
+        return "Mbushini të gjitha fushat", 400
 
     try:
         mosha = int(mosha)
     except ValueError:
-        return "Invalid age", 400
+        return "Mosha nuk është valide", 400
+    
+    # Format check for phone number - +383 4X XXX XXX
+    pattern = r"^\+383 4\d \d{3} \d{3}$"
+    if not re.match(pattern, numri_telefonit):
+        flash("Formati i numrit të telefonit duhet të jetë: +383 4X XXX XXX", "error")
+        return render_template("index.html")
+    
 
-    # DUPLICATE CHECK
+    #Check if the player already exists - duplicate
     existing_player = Player.query.filter_by(
         emri=emri,
         mbiemri=mbiemri,
@@ -90,9 +95,10 @@ def register():
         error_message = "Ky lojtar është regjistruar më parë!"
         return render_template('index.html', error=error_message)
 
-
+    #Assign time slot based on age
     orari = calculate_orari(mosha)
 
+    #Create and save the player to the database
     player = Player(
         emri=emri,
         emri_prindit=emri_prindit,
@@ -104,8 +110,10 @@ def register():
     db.session.add(player)
     db.session.commit()
 
+    #Redirect to confirmation page
     return render_template('confirmation.html', emri=emri, orari=orari)
 
+#Login route for coaches
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -126,17 +134,15 @@ def login():
             session['login_attempts'] += 1
             flash("Passwordi është gabim", "error")
 
-            if session['login_attempts'] >= 2:
+            #Lockout after 3 failed attempts
+            if session['login_attempts'] >= 3:
                 flash("Shumë tentativa të pasuksesshme. Po ju kthejmë në faqen kryesore.", "error")
                 session['login_attempts'] = 0
                 return redirect(url_for("home"))
 
     return render_template("login.html")
 
-
-
-from datetime import datetime, timedelta
-
+# Coach view route
 @app.route("/coach")
 def coach_view():
     if not session.get("coach_logged_in"):
@@ -158,7 +164,7 @@ def coach_view():
 
     return render_template("coach.html", grouped_players=grouped_players)
 
-
+#Coaches can delete players by ID (primary key)
 @app.route('/delete_player/<int:player_id>', methods=["POST"])
 def delete_player(player_id):
     if not session.get("coach_logged_in"):
@@ -169,22 +175,26 @@ def delete_player(player_id):
     db.session.commit()
     return redirect(url_for("coach_view"))
 
+#Logout route for coachesS
 @app.route("/logout")
 def logout():
     session.pop("coach_logged_in", None)
     return redirect(url_for("login"))
 
-
+#Database initialization
 with app.app_context():
     db.create_all()
 
-    # Create a default coach only if it doesn't exist
-    if not Coach.query.filter_by(username="coach").first():
-        coach = Coach(username="coach", password_hash=generate_password_hash("password123"))
+    default_username = os.getenv("COACH_USERNAME")
+    default_password = os.getenv("COACH_PASSWORD")
+
+    #Check if the default coach exists, if not create it
+    if not Coach.query.filter_by(username=default_username).first():
+        coach = Coach(username=default_username, password_hash=generate_password_hash(default_password))
         db.session.add(coach)
         db.session.commit()
 
-
+#Run the application locally
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

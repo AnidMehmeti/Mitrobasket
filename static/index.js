@@ -1,66 +1,82 @@
-const form = document.getElementById('form'); // Merr elementin e formës nga ID-ja 'form'
-const full_name = document.getElementById('full_name'); // Merr elementin e emrit të plotë nga ID-ja 'full_name'
-const age = document.getElementById('age'); // Merr elementin e moshës nga ID-ja 'age'
-const email = document.getElementById('email'); // Merr elementin e email-it nga ID-ja 'email'
+// Get form input elements by their ID
+const form = document.getElementById('form');
+const full_name = document.getElementById('full_name');
+const age = document.getElementById('age');
 
+// Show error message and style input with error class
+const setError = (element, message) => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
 
-
-const setError = (element, message) => { // Funksioni që vendos mesazhin error 
-    const inputControl = element.parentElement; // Marrësi i prindit të elementit
-    const errorDisplay = inputControl.querySelector('.error'); 
-
-    errorDisplay.innerText = message; // Vendos tekstin e gabimit në elementin e shfaqjes
-    inputControl.classList.add('error'); // E shton klasën 'error' në prindin e elementit
-    inputControl.classList.remove('success'); // E hiq klasën 'success' nga prindi i elementit
+    errorDisplay.innerText = message;
+    inputControl.classList.add('error');
+    inputControl.classList.remove('success');
 };
 
-const setSuccess = element => { // Funksioni që vendos mesazhin e sukseshëm
-    const inputControl = element.parentElement; 
-    const errorDisplay = inputControl.querySelector('.error'); 
+// Show success styling and clear value
+const setSuccess = element => {
+    const inputControl = element.parentElement;
+    const errorDisplay = inputControl.querySelector('.error');
 
-    errorDisplay.innerText = ''; // Duhet të shkruhet dicka
-    inputControl.classList.add('success'); // E shton klasën 'success' në prindin e elementit
-    inputControl.classList.remove('error'); // E hiq klasën 'error' nga prindi i elementit
-    element.value = ''; // Fshin vlerën e elementit pasi klikon "submit"
+    errorDisplay.innerText = '';
+    inputControl.classList.add('success');
+    inputControl.classList.remove('error');
+    element.value = ''; // Clears input value after successful submission
 };
 
-const isValidEmail = email => { // Funksioni që verifikon nëse një email është i vlefshëm
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // Verifikimi i sintaksës të email-it
-    return re.test(String(email).toLowerCase()); // Kthe rezultatin e verifikimit të email-it
-};
+// Age validation – show custom messages for invalid age range
+age.addEventListener('input', () => {
+    const ageValue = Number(age.value);
 
-  const ageInput = document.getElementById('age');
-
-  ageInput.addEventListener('input', () => {
-    const age = Number(ageInput.value);
-
-    if (age > 20) {
-      ageInput.setCustomValidity('Jeni shumë të mëdhnjë për t’u regjistruar.');
-    } else if (age < 6) {
-      ageInput.setCustomValidity('Jeni shumë të vegjël për t’u regjistruar.');
+    if (ageValue > 20) {
+        age.setCustomValidity('Jeni të mëdhenjë për të regjistruar.');
+    } else if (ageValue < 6) {
+        age.setCustomValidity('Jeni të vegjël për të regjistruar.');
     } else {
-      ageInput.setCustomValidity('');
+        age.setCustomValidity('');
     }
-  });
+});
 
-const validateInputs = () => { // Funksioni që kontrollon fushat e inputit
-    const full_nameValue = full_name.value.trim(); // Merr vlerën e emrit të plotë dhe heq hapësira të tepërta
-    const emailValue = email.value.trim(); // Merr vlerën e email-it dhe heq hapësira të tepërta
+// Form input validation for name
+const validateInputs = () => {
+    const full_nameValue = full_name.value.trim();
 
-    if (full_nameValue === '') { // Nëse emri është i zbrazët
-        setError(full_name, "Duhet ta shkruani emrin"); // Mesazh për klikimin e josukseshëm
+    if (full_nameValue === '') {
+        setError(full_name, "Full name is required.");
     } else {
-        setSuccess(full_name); // Shkrimi i emrit është i vlefshëm
+        setSuccess(full_name);
     }
 
-
-
-    if (emailValue === '') { // Nëse email-i është i zbrazët
-        setError(email, "Duhet ta shkruani email-in"); // Mesazh për klikimin e josukseshëm
-    } else if (!isValidEmail(emailValue)) { // Nëse email-i nuk është i vlefshëm sipas verifikimit
-        setError(email, "Duhet ta shkruani një email të vlefshëm"); // Mesazh për klikimin e josukseshëm
-    } else {
-        setSuccess(email); // Shkrimi i email-it është i vlefshëm
-    }
 };
+
+// Restrict input to only letters, spaces, dash, and Albanian characters
+document.querySelectorAll('.only-letters').forEach(function(input) {
+    input.addEventListener('input', function () {
+        this.value = this.value.replace(/[^A-Za-zÇçëË\s\-]/g, '');
+    });
+});
+
+// Automatically format phone numbers to: +383 4X XXX XXX
+function formatPhoneNumber(input) {
+    const prefix = "+383 4";
+
+    if (!input.value.startsWith(prefix)) {
+        input.value = prefix;
+    }
+
+    // Remove non-digit characters and keep only 7 digits after prefix
+    let remaining = input.value.slice(prefix.length).replace(/\D/g, "").slice(0, 7);
+
+    let formatted = "";
+    if (remaining.length > 0) {
+        formatted += remaining[0];
+    }
+    if (remaining.length > 1) {
+        formatted += " " + remaining.slice(1, 4);
+    }
+    if (remaining.length > 4) {
+        formatted += " " + remaining.slice(4);
+    }
+
+    input.value = prefix + formatted;
+}
