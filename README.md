@@ -60,13 +60,27 @@ Anid Mehmeti
 
 **🖼️ Screenshots**
 
+
+Mitrobasket Landing Page
 ![Mitrobasket Landing Page](static/images/screenshot1.png)
 
+Mitrobasket Registration Form
 ![Mitrobasket Registration Form](static/images/screenshot2.png)
 
+Mitrobasket Confirmation Page
 ![Mitrobasket Confirmation Page](static/images/screenshot3.png)
 
+Mitrobasket Coach View
 ![Mitrobasket Coach View](static/images/screenshot4.png)
+
+
+**Future Improvements**
+Use a real database (e.g., SQLite or PostgreSQL)
+
+Implement CSRF protection or deploy securely
+
+Clean up UI with Tailwind further (dark mode, accessibility)
+
 
 **📎 License**
 This project is for educational and demonstration purposes.
