@@ -61,8 +61,11 @@ Anid Mehmeti
 **🖼️ Screenshots**
 
 ![Mitrobasket Landing Page] (static/images/screenshot1.png)
+
 ![Mitrobasket Registration Form] (static/images/screenshot2.png)
+
 ![Mitrobasket Confirmation Page] (static/images/screenshot3.png)
+
 ![Mitrobasket Coach View] (static/images/screenshot4.png)
 
 **📎 License**
